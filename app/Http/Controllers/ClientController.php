@@ -41,7 +41,7 @@ class ClientController extends Controller
 
     public function destroy(Client $client)
     {
-        if ($client->estimates()->exists() || $client->invoices()->exists() || $client->payments()->exists() || \App\Models\LumberInvoice::where('client_id', $client->id)->exists()) {
+        if ($client->payments()->exists() || \App\Models\LumberInvoice::where('client_id', $client->id)->exists()) {
             throw ValidationException::withMessages(['name' => '取引で使用中のため削除できません。']);
         }
         $client->delete();

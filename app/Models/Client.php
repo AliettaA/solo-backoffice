@@ -11,16 +11,6 @@ class Client extends Model
         'contact_person', 'email', 'phone', 'memo', 'invoice_registration_number',
     ];
 
-    public function estimates()
-    {
-        return $this->hasMany(Estimate::class);
-    }
-
-    public function invoices()
-    {
-        return $this->hasMany(Invoice::class);
-    }
-
     public function payments()
     {
         return $this->hasMany(ClientPayment::class);
