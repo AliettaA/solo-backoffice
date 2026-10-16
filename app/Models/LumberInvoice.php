@@ -9,7 +9,7 @@ class LumberInvoice extends Model
 {
     protected $fillable = [
         'invoice_number', 'client_id', 'issue_date', 'status',
-        'invoice_adjustment_amount', 'invoice_adjustment_description', 'subtotal_8', 'tax_8', 'notes', 'subtotal', 'tax_amount', 'total', 'paid_amount',
+        'invoice_adjustment_amount', 'invoice_adjustment_description', 'subtotal_8', 'tax_8', 'notes', 'subtotal', 'tax_amount', 'total',
     ];
 
     protected $casts = ['issue_date' => 'date'];
@@ -47,32 +47,6 @@ class LumberInvoice extends Model
             'tax_8' => $tax8,
             'total' => $subtotal10 + $tax10 + $subtotal8 + $tax8,
         ]);
-    }
-
-    public function payments()
-    {
-        return $this->hasMany(LumberInvoicePayment::class);
-    }
-
-    public function recalculatePaidAmount(): void
-    {
-        $paid = $this->payments()->sum('amount');
-
-        $status = 'sent';
-        if ($paid <= 0) {
-            $status = $this->status === 'draft' ? 'draft' : 'sent';
-        } elseif ($paid < $this->total) {
-            $status = 'partially_paid';
-        } else {
-            $status = 'paid';
-        }
-
-        $this->update(['paid_amount' => $paid, 'status' => $status]);
-    }
-
-    public function remainingAmount(): int
-    {
-        return max(0, $this->total - $this->paid_amount);
     }
 
     public function productLines()

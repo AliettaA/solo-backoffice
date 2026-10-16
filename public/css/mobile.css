@@ -1,0 +1,23 @@
+/* Keep desktop tables; make daily entry usable on narrow touch screens. */
+.mobile-shortcuts { display: none; }
+.invoice-quantities { grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); }
+@media (max-width: 639px) {
+    .mobile-shortcuts { display: flex; gap: 8px; padding: 8px 12px; background: white; border-bottom: 1px solid #d1d5db; }
+    .mobile-shortcuts > * { flex: 1; display: flex; align-items: center; justify-content: center; min-height: 44px; border-radius: 6px; background: #eff6ff; color: #1d4ed8; font-weight: 600; }
+    #main-navigation { display: none; }
+    #main-navigation.mobile-open { display: flex; }
+    #main-navigation a { display: inline-flex; align-items: center; min-height: 44px; }
+    main { min-width: 0; overflow-wrap: anywhere; }
+    main input:not([type="hidden"]), main select, main textarea { font-size: 16px; min-height: 44px; max-width: 100%; min-width: 0; }
+    main button, main a { min-height: 44px; }
+    main button { padding: 10px 12px; }
+    .mobile-cards, .mobile-cards tbody { display: block; width: 100%; }
+    .mobile-cards thead { display: none; }
+    .mobile-cards tbody tr { display: block; border: 1px solid #d1d5db; border-radius: 8px; margin-bottom: 12px; padding: 8px; background: white; }
+    .mobile-cards td[data-label] { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 6px; text-align: right; flex-wrap: wrap; }
+    .mobile-cards td[data-label]::before { content: attr(data-label); text-align: left; color: #4b5563; font-size: 14px; }
+    .mobile-cards td input { width: 160px; }
+    .mobile-cards td[data-label="操作"] a { display: inline-flex; align-items: center; }
+    .invoice-quantities { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .line-row { padding: 12px; }
+}

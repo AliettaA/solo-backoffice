@@ -11,7 +11,6 @@ use App\Http\Controllers\FinancialStatementController;
 use App\Http\Controllers\GeneralLedgerController;
 use App\Http\Controllers\JournalEntryController;
 use App\Http\Controllers\LumberInvoiceController;
-use App\Http\Controllers\LumberInvoicePaymentController;
 use App\Http\Controllers\MonthlyInvoiceController;
 use App\Http\Controllers\OpeningBalanceController;
 use App\Http\Controllers\PayeeController;
@@ -20,7 +19,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SalaryPaymentController;
 use Illuminate\Support\Facades\Route;
 
-Route::resource('employees', EmployeeController::class);
+Route::resource('employees', EmployeeController::class)->only(['index', 'store', 'update', 'destroy']);
 
 Route::get('attendances', [AttendanceController::class, 'index'])->name('attendances.index');
 Route::post('attendances', [AttendanceController::class, 'store'])->name('attendances.store');
@@ -42,7 +41,7 @@ Route::get('cash-book/pdf', [CashBookController::class, 'pdf'])->name('cash-book
 Route::get('general-ledger', [GeneralLedgerController::class, 'index'])->name('general-ledger.index');
 Route::get('general-ledger/pdf', [GeneralLedgerController::class, 'pdf'])->name('general-ledger.pdf');
 
-Route::resource('journal-entries', JournalEntryController::class);
+Route::resource('journal-entries', JournalEntryController::class)->except(['show']);
 Route::get('journal-entries-pdf', [JournalEntryController::class, 'pdf'])->name('journal-entries.pdf');
 
 Route::get('expense-categories', [ExpenseCategoryController::class, 'index'])->name('expense-categories.index');
@@ -59,9 +58,9 @@ Route::get('/', function () {
     return redirect()->route('clients.index');
 });
 
-Route::resource('clients', ClientController::class);
-Route::resource('products', ProductController::class);
-Route::resource('lumber-invoices', LumberInvoiceController::class);
+Route::resource('clients', ClientController::class)->except(['show']);
+Route::resource('products', ProductController::class)->except(['show']);
+Route::resource('lumber-invoices', LumberInvoiceController::class)->except(['show']);
 Route::get('lumber-invoices/{lumber_invoice}/pdf', [LumberInvoiceController::class, 'pdf'])->name('lumber-invoices.pdf');
 
 Route::get('pricing-master', [PricingMasterController::class, 'index'])->name('pricing-master.index');
@@ -91,8 +90,6 @@ Route::post('pricing-master/settings', [PricingMasterController::class, 'updateS
 Route::get('company', [CompanyController::class, 'edit'])->name('company.edit');
 Route::put('company', [CompanyController::class, 'update'])->name('company.update');
 
-Route::post('lumber-invoices/{lumber_invoice}/payments', [LumberInvoicePaymentController::class, 'store'])->name('lumber-invoices.payments.store');
-Route::delete('lumber-invoices/payments/{payment}', [LumberInvoicePaymentController::class, 'destroy'])->name('lumber-invoices.payments.destroy');
 
 Route::get('payments', [ClientPaymentController::class, 'index'])->name('payments.index');
 Route::post('payments', [ClientPaymentController::class, 'store'])->name('payments.store');

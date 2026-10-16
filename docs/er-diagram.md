@@ -16,7 +16,7 @@
 
 `lumber_invoices`は画面上の「納品書」です。月次請求書は納品データを集計して作成し、専用の月次請求書テーブルはありません。
 
-取引先別入金と納品書別入金は別のテーブルで、両者を結ぶ外部キーはありません。
+現在の入金は取引先・対象月単位で`client_payments`に保存します。納品書別入金機能は削除済みです。
 
 ```mermaid
 erDiagram
@@ -24,7 +24,6 @@ erDiagram
     lumber_invoices ||..o{ lumber_invoice_lines : "lumber_invoice_id"
     lumber_species ||..o{ lumber_invoice_lines : "lumber_species_id"
     lumber_invoice_lines ||..o{ lumber_invoice_line_tiers : "lumber_invoice_line_id"
-    lumber_invoices ||..o{ lumber_invoice_payments : "lumber_invoice_id"
     clients ||..o{ client_payments : "client_id"
     lumber_invoices ||..o{ lumber_invoice_product_lines : "lumber_invoice_id"
     products o|..o{ lumber_invoice_product_lines : "product_id"
@@ -50,7 +49,6 @@ erDiagram
         bigint subtotal "符号なし"
         bigint tax_amount "符号なし"
         bigint total "符号なし"
-        bigint paid_amount "符号なし"
         bigint subtotal_8 "符号なし"
         bigint tax_8 "符号なし"
         int invoice_adjustment_amount
@@ -105,14 +103,6 @@ erDiagram
         int flat_price "NULL可 符号なし"
         boolean apply_thickness_surcharge
         boolean apply_length_adjustment
-    }
-    lumber_invoice_payments {
-        bigint id PK
-        bigint lumber_invoice_id FK
-        date paid_at
-        int amount "符号なし"
-        varchar method "NULL可"
-        text memo "NULL可"
     }
     client_payments {
         bigint id PK
@@ -294,7 +284,7 @@ erDiagram
 | `client_payments` | `journal_entries.description`に`入金:client_payment_{id}`を保存 |
 | `salary_payments` | `journal_entries.description`に`給与:salary_payment_{id}`を保存 |
 
-モデルの`syncJournalEntry()`・`deleteJournalEntry()`が、この文字列で対応する伝票を検索します。DBが1対1を保証する関係ではないため、ER図に外部キーの線は引いていません。納品書別の`lumber_invoice_payments`には同じ自動仕訳メソッドはありません。
+モデルの`syncJournalEntry()`・`deleteJournalEntry()`が、この文字列で対応する伝票を検索します。DBが1対1を保証する関係ではないため、ER図に外部キーの線は引いていません。
 
 ## 複合一意制約と入力チェック
 
@@ -327,7 +317,6 @@ erDiagram
 | `lumber_invoice_lines` | 木材明細 |
 | `lumber_invoice_line_tiers` | 数量帯別明細 |
 | `lumber_invoice_product_lines` | 品目明細 |
-| `lumber_invoice_payments` | 納品書別入金 |
 | `client_payments` | 取引先別入金 |
 | `employees` | 従業員 |
 | `attendances` | 勤怠 |
@@ -340,3 +329,5 @@ erDiagram
 | `payees` | 支払先 |
 
 旧見積・請求テーブル（`estimates`、`estimate_items`、`invoices`、`invoice_items`、`payments`）は、整理用マイグレーションですべて空であることを確認して削除します。1件でもデータがあれば、削除開始前に処理を中止します。作成時のマイグレーションは既存環境の履歴とロールバックのため保持しています。
+
+納品書別入金の`lumber_invoice_payments`は、入金記録が空かつ納品書の`paid_amount`がすべて0の場合にのみ削除します。続くマイグレーションで、全件0であることを再確認して`lumber_invoices.paid_amount`カラムも削除します。現在の入金は`client_payments`から集計します。

@@ -75,7 +75,7 @@ function createLineElement(data = null) {
         return `
         <div class="text-center">
             <div class="text-xs text-gray-500 mb-1">${invoiceEscape(t.label)}枚</div>
-            <input type="number" min="0" class="tier-qty w-full border rounded p-1 text-center"
+            <input type="number" inputmode="numeric" min="0" class="tier-qty w-full border rounded p-1 text-center"
                    data-tier-id="${t.id}" data-tier-label="${invoiceEscape(t.label)}" data-surcharge="${t.surcharge_amount}"
                    name="lines[${idx}][quantities][${t.id}]" value="${invoiceEscape(qty)}">
             <div class="text-xs tier-unit-price text-gray-400 mt-1">単価: -</div>
@@ -84,7 +84,7 @@ function createLineElement(data = null) {
     }).join("");
 
     wrapper.innerHTML = `
-        <div class="grid grid-cols-6 gap-2 mb-3">
+        <div class="grid grid-cols-2 sm:grid-cols-6 gap-2 mb-3">
             <div class="col-span-2">
                 <label class="block text-xs text-gray-500">樹種</label>
                 <select name="lines[${idx}][lumber_species_id]" class="line-species w-full border rounded p-1">
@@ -97,11 +97,11 @@ function createLineElement(data = null) {
             </div>
             <div>
                 <label class="block text-xs text-gray-500">幅(cm)</label>
-                <input type="number" step="0.5" name="lines[${idx}][width]" class="line-width w-full border rounded p-1" value="${invoiceEscape(data ? data.width : "")}">
+                <input type="number" inputmode="decimal" step="0.5" name="lines[${idx}][width]" class="line-width w-full border rounded p-1" value="${invoiceEscape(data ? data.width : "")}">
             </div>
             <div>
                 <label class="block text-xs text-gray-500">長さ(m)</label>
-                <input type="number" step="0.1" name="lines[${idx}][length]" class="line-length w-full border rounded p-1" value="${invoiceEscape(data ? data.length : 4)}">
+                <input type="number" inputmode="decimal" step="0.1" name="lines[${idx}][length]" class="line-length w-full border rounded p-1" value="${invoiceEscape(data ? data.length : 4)}">
             </div>
             <div style="display: ${Number(data?.adjustment_amount || 0) !== 0 ? 'block' : 'none'};">
                 <label class="block text-xs text-gray-500">既存の明細調整（円）</label>
@@ -114,11 +114,11 @@ function createLineElement(data = null) {
             </label>
             <p class="text-xs text-gray-500">元単価に加減します。値引きは -5、-10、加算は 5、10 など。</p>
         </div>
-        <div class="grid grid-cols-${window.TIERS.length + 2} gap-2 items-end">
+        <div class="grid invoice-quantities gap-2 items-end">
             ${tierInputs}
             <div class="text-center">
                 <label class="block text-xs text-gray-500 mb-1">戻し
-                    <input type="number" min="0" max="1000000" step="1" name="lines[${idx}][returned_quantity]" class="line-returned w-full border rounded p-1 text-center" value="${invoiceEscape(data?.returned_quantity ?? 0)}">
+                    <input type="number" inputmode="numeric" min="0" max="1000000" step="1" name="lines[${idx}][returned_quantity]" class="line-returned w-full border rounded p-1 text-center" value="${invoiceEscape(data?.returned_quantity ?? 0)}">
                 </label>
                 <div class="text-xs text-gray-500">金額対象外</div>
             </div>
@@ -195,7 +195,7 @@ function createProductLineElement(data = null) {
     const idx = productLineIndex++;
     const wrapper = document.createElement("div");
     wrapper.className =
-        "grid grid-cols-6 gap-2 items-end product-line-row border-b pb-2";
+        "grid grid-cols-2 sm:grid-cols-6 gap-2 items-end product-line-row border-b pb-2";
     wrapper.dataset.index = idx;
 
     const productOptions = ['<option value="">(任意入力)</option>']
@@ -221,7 +221,7 @@ function createProductLineElement(data = null) {
         </div>
         <div>
             <label class="block text-xs text-gray-500">数量</label>
-            <input type="number" step="0.01" class="product-quantity w-full border rounded p-1" name="product_lines[${idx}][quantity]" value="${invoiceEscape(data ? data.quantity : 1)}">
+            <input type="number" inputmode="decimal" step="0.01" class="product-quantity w-full border rounded p-1" name="product_lines[${idx}][quantity]" value="${invoiceEscape(data ? data.quantity : 1)}">
         </div>
         <div>
             <label class="block text-xs text-gray-500">単価</label>

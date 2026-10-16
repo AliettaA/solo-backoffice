@@ -1,21 +1,21 @@
 <?xml version='1.0' encoding='utf-8'?>
 <mxfile host="app.diagrams.net" type="device">
-  <diagram id="complete-erd" name="全体ER図">
-    <mxGraphModel dx="1800" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3300" pageHeight="2450" math="0" shadow="0">
+  <diagram id="complete-erd" name="現行ER図（全体）">
+    <mxGraphModel dx="1800" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3300" pageHeight="2400" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="title" value="Solo Backoffice — 全体ER図" vertex="1" parent="1" style="text;html=0;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=32;fontColor=#17365D;">
+        <mxCell id="title" value="Solo Backoffice — 現行データベース ER図（22テーブル）" vertex="1" parent="1" style="text;html=0;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=32;fontColor=#17365D;">
           <mxGeometry x="40" y="25" width="3200" height="50" as="geometry" />
         </mxCell>
         <mxCell id="legend" value="PK：主キー　FK：DB外部キー　UK：単一カラム一意　||：1件　○|：0または1件　○＋鳥足：0件以上&#10;点線：非識別関係（DB外部キーあり）。共通のcreated_at・updated_atは省略。型は簡略表記。" vertex="1" parent="1" style="text;html=0;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=18;fontColor=#17365D;">
           <mxGeometry x="40" y="85" width="3200" height="65" as="geometry" />
         </mxCell>
-        <mxCell id="notes" value="入金・給与と振替伝票は摘要の識別文字列で連携し、外部キーはありません。税額表・各種加算マスタも計算時に参照します。&#10;出納帳・月次請求書・決算書は集計で作成します。旧見積・請求テーブルは削除済みです。" vertex="1" parent="1" style="text;html=0;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=18;fontColor=#17365D;">
+        <mxCell id="notes" value="最新版：未使用の旧見積・旧請求・旧支出テーブルを除外。現行マイグレーションの全業務カラムと照合済み。&#10;入金・給与→振替伝票は摘要内の識別文字列で連携（FKなし）。出納帳・月次請求書・決算書は集計表示。共通timestampは省略。" vertex="1" parent="1" style="text;html=0;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=18;fontColor=#17365D;">
           <mxGeometry x="40" y="155" width="3200" height="65" as="geometry" />
         </mxCell>
         <mxCell id="clients" value="取引先&#10;clients" style="swimlane;html=0;startSize=56;horizontal=1;rounded=0;fillColor=#DAE8FC;swimlaneFillColor=#FFFFFF;strokeColor=#6C8EBF;fontSize=16;fontStyle=1;collapsible=0;" vertex="1" parent="1">
-          <mxGeometry as="geometry" x="40" y="260" width="430" height="326" />
+          <mxGeometry as="geometry" x="60" y="260" width="430" height="326" />
         </mxCell>
         <mxCell id="clients-f0" value="PK  id : bigint" style="text;html=0;align=left;verticalAlign=middle;spacingLeft=10;fontSize=12;fontStyle=0;overflow=hidden;" vertex="1" parent="clients">
           <mxGeometry as="geometry" x="0" y="56" width="430" height="27" />
@@ -48,7 +48,7 @@
           <mxGeometry as="geometry" x="0" y="299" width="430" height="27" />
         </mxCell>
         <mxCell id="client_payments" value="取引先別入金&#10;client_payments" style="swimlane;html=0;startSize=56;horizontal=1;rounded=0;fillColor=#DAE8FC;swimlaneFillColor=#FFFFFF;strokeColor=#6C8EBF;fontSize=16;fontStyle=1;collapsible=0;" vertex="1" parent="1">
-          <mxGeometry as="geometry" x="580" y="260" width="430" height="245" />
+          <mxGeometry as="geometry" x="600" y="260" width="430" height="245" />
         </mxCell>
         <mxCell id="client_payments-f0" value="PK  id : bigint" style="text;html=0;align=left;verticalAlign=middle;spacingLeft=10;fontSize=12;fontStyle=0;overflow=hidden;" vertex="1" parent="client_payments">
           <mxGeometry as="geometry" x="0" y="56" width="430" height="27" />
@@ -71,29 +71,8 @@
         <mxCell id="client_payments-f6" value="memo : text  (NULL可)" style="text;html=0;align=left;verticalAlign=middle;spacingLeft=10;fontSize=12;fontStyle=0;overflow=hidden;" vertex="1" parent="client_payments">
           <mxGeometry as="geometry" x="0" y="218" width="430" height="27" />
         </mxCell>
-        <mxCell id="lumber_invoice_payments" value="納品書別入金&#10;lumber_invoice_payments" style="swimlane;html=0;startSize=56;horizontal=1;rounded=0;fillColor=#DAE8FC;swimlaneFillColor=#FFFFFF;strokeColor=#6C8EBF;fontSize=16;fontStyle=1;collapsible=0;" vertex="1" parent="1">
-          <mxGeometry as="geometry" x="1120" y="260" width="430" height="218" />
-        </mxCell>
-        <mxCell id="lumber_invoice_payments-f0" value="PK  id : bigint" style="text;html=0;align=left;verticalAlign=middle;spacingLeft=10;fontSize=12;fontStyle=0;overflow=hidden;" vertex="1" parent="lumber_invoice_payments">
-          <mxGeometry as="geometry" x="0" y="56" width="430" height="27" />
-        </mxCell>
-        <mxCell id="lumber_invoice_payments-f1" value="FK  lumber_invoice_id : bigint" style="text;html=0;align=left;verticalAlign=middle;spacingLeft=10;fontSize=12;fontStyle=0;overflow=hidden;" vertex="1" parent="lumber_invoice_payments">
-          <mxGeometry as="geometry" x="0" y="83" width="430" height="27" />
-        </mxCell>
-        <mxCell id="lumber_invoice_payments-f2" value="paid_at : date" style="text;html=0;align=left;verticalAlign=middle;spacingLeft=10;fontSize=12;fontStyle=0;overflow=hidden;" vertex="1" parent="lumber_invoice_payments">
-          <mxGeometry as="geometry" x="0" y="110" width="430" height="27" />
-        </mxCell>
-        <mxCell id="lumber_invoice_payments-f3" value="amount : int  (符号なし)" style="text;html=0;align=left;verticalAlign=middle;spacingLeft=10;fontSize=12;fontStyle=0;overflow=hidden;" vertex="1" parent="lumber_invoice_payments">
-          <mxGeometry as="geometry" x="0" y="137" width="430" height="27" />
-        </mxCell>
-        <mxCell id="lumber_invoice_payments-f4" value="method : varchar  (NULL可)" style="text;html=0;align=left;verticalAlign=middle;spacingLeft=10;fontSize=12;fontStyle=0;overflow=hidden;" vertex="1" parent="lumber_invoice_payments">
-          <mxGeometry as="geometry" x="0" y="164" width="430" height="27" />
-        </mxCell>
-        <mxCell id="lumber_invoice_payments-f5" value="memo : text  (NULL可)" style="text;html=0;align=left;verticalAlign=middle;spacingLeft=10;fontSize=12;fontStyle=0;overflow=hidden;" vertex="1" parent="lumber_invoice_payments">
-          <mxGeometry as="geometry" x="0" y="191" width="430" height="27" />
-        </mxCell>
-        <mxCell id="employees" value="従業員&#10;employees" style="swimlane;html=0;startSize=56;horizontal=1;rounded=0;fillColor=#DAE8FC;swimlaneFillColor=#FFFFFF;strokeColor=#6C8EBF;fontSize=16;fontStyle=1;collapsible=0;" vertex="1" parent="1">
-          <mxGeometry as="geometry" x="1660" y="260" width="430" height="218" />
+        <mxCell id="employees" value="従業員&#10;employees" style="swimlane;html=0;startSize=56;horizontal=1;rounded=0;fillColor=#D5E8D4;swimlaneFillColor=#FFFFFF;strokeColor=#82B366;fontSize=16;fontStyle=1;collapsible=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1680" y="260" width="430" height="218" />
         </mxCell>
         <mxCell id="employees-f0" value="PK  id : bigint" style="text;html=0;align=left;verticalAlign=middle;spacingLeft=10;fontSize=12;fontStyle=0;overflow=hidden;" vertex="1" parent="employees">
           <mxGeometry as="geometry" x="0" y="56" width="430" height="27" />
@@ -113,8 +92,8 @@
         <mxCell id="employees-f5" value="employment_type : varchar" style="text;html=0;align=left;verticalAlign=middle;spacingLeft=10;fontSize=12;fontStyle=0;overflow=hidden;" vertex="1" parent="employees">
           <mxGeometry as="geometry" x="0" y="191" width="430" height="27" />
         </mxCell>
-        <mxCell id="attendances" value="勤怠&#10;attendances" style="swimlane;html=0;startSize=56;horizontal=1;rounded=0;fillColor=#DAE8FC;swimlaneFillColor=#FFFFFF;strokeColor=#6C8EBF;fontSize=16;fontStyle=1;collapsible=0;" vertex="1" parent="1">
-          <mxGeometry as="geometry" x="2200" y="260" width="430" height="299" />
+        <mxCell id="attendances" value="勤怠&#10;attendances" style="swimlane;html=0;startSize=56;horizontal=1;rounded=0;fillColor=#D5E8D4;swimlaneFillColor=#FFFFFF;strokeColor=#82B366;fontSize=16;fontStyle=1;collapsible=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="2220" y="260" width="430" height="299" />
         </mxCell>
         <mxCell id="attendances-f0" value="PK  id : bigint" style="text;html=0;align=left;verticalAlign=middle;spacingLeft=10;fontSize=12;fontStyle=0;overflow=hidden;" vertex="1" parent="attendances">
           <mxGeometry as="geometry" x="0" y="56" width="430" height="27" />
@@ -143,8 +122,8 @@
         <mxCell id="attendances-f8" value="memo : text  (NULL可)" style="text;html=0;align=left;verticalAlign=middle;spacingLeft=10;fontSize=12;fontStyle=0;overflow=hidden;" vertex="1" parent="attendances">
           <mxGeometry as="geometry" x="0" y="272" width="430" height="27" />
         </mxCell>
-        <mxCell id="salary_payments" value="給与支払い&#10;salary_payments" style="swimlane;html=0;startSize=56;horizontal=1;rounded=0;fillColor=#DAE8FC;swimlaneFillColor=#FFFFFF;strokeColor=#6C8EBF;fontSize=16;fontStyle=1;collapsible=0;" vertex="1" parent="1">
-          <mxGeometry as="geometry" x="2740" y="260" width="430" height="380" />
+        <mxCell id="salary_payments" value="給与支払い&#10;salary_payments" style="swimlane;html=0;startSize=56;horizontal=1;rounded=0;fillColor=#D5E8D4;swimlaneFillColor=#FFFFFF;strokeColor=#82B366;fontSize=16;fontStyle=1;collapsible=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="2760" y="260" width="430" height="380" />
         </mxCell>
         <mxCell id="salary_payments-f0" value="PK  id : bigint" style="text;html=0;align=left;verticalAlign=middle;spacingLeft=10;fontSize=12;fontStyle=0;overflow=hidden;" vertex="1" parent="salary_payments">
           <mxGeometry as="geometry" x="0" y="56" width="430" height="27" />
@@ -183,7 +162,7 @@
           <mxGeometry as="geometry" x="0" y="353" width="430" height="27" />
         </mxCell>
         <mxCell id="lumber_invoices" value="納品書&#10;lumber_invoices" style="swimlane;html=0;startSize=56;horizontal=1;rounded=0;fillColor=#DAE8FC;swimlaneFillColor=#FFFFFF;strokeColor=#6C8EBF;fontSize=16;fontStyle=1;collapsible=0;" vertex="1" parent="1">
-          <mxGeometry as="geometry" x="40" y="800" width="430" height="434" />
+          <mxGeometry as="geometry" x="60" y="790" width="430" height="407.0" />
         </mxCell>
         <mxCell id="lumber_invoices-f0" value="PK  id : bigint" style="text;html=0;align=left;verticalAlign=middle;spacingLeft=10;fontSize=12;fontStyle=0;overflow=hidden;" vertex="1" parent="lumber_invoices">
           <mxGeometry as="geometry" x="0" y="56" width="430" height="27" />
@@ -212,23 +191,20 @@
         <mxCell id="lumber_invoices-f8" value="total : bigint  (符号なし)" style="text;html=0;align=left;verticalAlign=middle;spacingLeft=10;fontSize=12;fontStyle=0;overflow=hidden;" vertex="1" parent="lumber_invoices">
           <mxGeometry as="geometry" x="0" y="272" width="430" height="27" />
         </mxCell>
-        <mxCell id="lumber_invoices-f9" value="paid_amount : bigint  (符号なし)" style="text;html=0;align=left;verticalAlign=middle;spacingLeft=10;fontSize=12;fontStyle=0;overflow=hidden;" vertex="1" parent="lumber_invoices">
-          <mxGeometry as="geometry" x="0" y="299" width="430" height="27" />
-        </mxCell>
         <mxCell id="lumber_invoices-f10" value="subtotal_8 : bigint  (符号なし)" style="text;html=0;align=left;verticalAlign=middle;spacingLeft=10;fontSize=12;fontStyle=0;overflow=hidden;" vertex="1" parent="lumber_invoices">
-          <mxGeometry as="geometry" x="0" y="326" width="430" height="27" />
+          <mxGeometry as="geometry" x="0" y="299.0" width="430" height="27" />
         </mxCell>
         <mxCell id="lumber_invoices-f11" value="tax_8 : bigint  (符号なし)" style="text;html=0;align=left;verticalAlign=middle;spacingLeft=10;fontSize=12;fontStyle=0;overflow=hidden;" vertex="1" parent="lumber_invoices">
-          <mxGeometry as="geometry" x="0" y="353" width="430" height="27" />
+          <mxGeometry as="geometry" x="0" y="326.0" width="430" height="27" />
         </mxCell>
         <mxCell id="lumber_invoices-f12" value="invoice_adjustment_amount : int" style="text;html=0;align=left;verticalAlign=middle;spacingLeft=10;fontSize=12;fontStyle=0;overflow=hidden;" vertex="1" parent="lumber_invoices">
-          <mxGeometry as="geometry" x="0" y="380" width="430" height="27" />
+          <mxGeometry as="geometry" x="0" y="353.0" width="430" height="27" />
         </mxCell>
         <mxCell id="lumber_invoices-f13" value="invoice_adjustment_description : varchar  (NULL可)" style="text;html=0;align=left;verticalAlign=middle;spacingLeft=10;fontSize=12;fontStyle=0;overflow=hidden;" vertex="1" parent="lumber_invoices">
-          <mxGeometry as="geometry" x="0" y="407" width="430" height="27" />
+          <mxGeometry as="geometry" x="0" y="380.0" width="430" height="27" />
         </mxCell>
         <mxCell id="lumber_invoice_lines" value="木材明細&#10;lumber_invoice_lines" style="swimlane;html=0;startSize=56;horizontal=1;rounded=0;fillColor=#DAE8FC;swimlaneFillColor=#FFFFFF;strokeColor=#6C8EBF;fontSize=16;fontStyle=1;collapsible=0;" vertex="1" parent="1">
-          <mxGeometry as="geometry" x="580" y="800" width="430" height="380" />
+          <mxGeometry as="geometry" x="600" y="790" width="430" height="380" />
         </mxCell>
         <mxCell id="lumber_invoice_lines-f0" value="PK  id : bigint" style="text;html=0;align=left;verticalAlign=middle;spacingLeft=10;fontSize=12;fontStyle=0;overflow=hidden;" vertex="1" parent="lumber_invoice_lines">
           <mxGeometry as="geometry" x="0" y="56" width="430" height="27" />
@@ -267,7 +243,7 @@
           <mxGeometry as="geometry" x="0" y="353" width="430" height="27" />
         </mxCell>
         <mxCell id="lumber_invoice_line_tiers" value="数量帯別明細&#10;lumber_invoice_line_tiers" style="swimlane;html=0;startSize=56;horizontal=1;rounded=0;fillColor=#DAE8FC;swimlaneFillColor=#FFFFFF;strokeColor=#6C8EBF;fontSize=16;fontStyle=1;collapsible=0;" vertex="1" parent="1">
-          <mxGeometry as="geometry" x="1120" y="800" width="430" height="218" />
+          <mxGeometry as="geometry" x="1140" y="790" width="430" height="218" />
         </mxCell>
         <mxCell id="lumber_invoice_line_tiers-f0" value="PK  id : bigint" style="text;html=0;align=left;verticalAlign=middle;spacingLeft=10;fontSize=12;fontStyle=0;overflow=hidden;" vertex="1" parent="lumber_invoice_line_tiers">
           <mxGeometry as="geometry" x="0" y="56" width="430" height="27" />
@@ -287,8 +263,8 @@
         <mxCell id="lumber_invoice_line_tiers-f5" value="amount : int  (符号なし)" style="text;html=0;align=left;verticalAlign=middle;spacingLeft=10;fontSize=12;fontStyle=0;overflow=hidden;" vertex="1" parent="lumber_invoice_line_tiers">
           <mxGeometry as="geometry" x="0" y="191" width="430" height="27" />
         </mxCell>
-        <mxCell id="withholding_tax_brackets" value="源泉徴収税額表&#10;withholding_tax_brackets" style="swimlane;html=0;startSize=56;horizontal=1;rounded=0;fillColor=#DAE8FC;swimlaneFillColor=#FFFFFF;strokeColor=#6C8EBF;fontSize=16;fontStyle=1;collapsible=0;" vertex="1" parent="1">
-          <mxGeometry as="geometry" x="1660" y="800" width="430" height="380" />
+        <mxCell id="withholding_tax_brackets" value="源泉徴収税額表&#10;withholding_tax_brackets" style="swimlane;html=0;startSize=56;horizontal=1;rounded=0;fillColor=#D5E8D4;swimlaneFillColor=#FFFFFF;strokeColor=#82B366;fontSize=16;fontStyle=1;collapsible=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1680" y="790" width="430" height="380" />
         </mxCell>
         <mxCell id="withholding_tax_brackets-f0" value="PK  id : bigint" style="text;html=0;align=left;verticalAlign=middle;spacingLeft=10;fontSize=12;fontStyle=0;overflow=hidden;" vertex="1" parent="withholding_tax_brackets">
           <mxGeometry as="geometry" x="0" y="56" width="430" height="27" />
@@ -327,7 +303,7 @@
           <mxGeometry as="geometry" x="0" y="353" width="430" height="27" />
         </mxCell>
         <mxCell id="companies" value="事業者情報&#10;companies" style="swimlane;html=0;startSize=56;horizontal=1;rounded=0;fillColor=#DAE8FC;swimlaneFillColor=#FFFFFF;strokeColor=#6C8EBF;fontSize=16;fontStyle=1;collapsible=0;" vertex="1" parent="1">
-          <mxGeometry as="geometry" x="2200" y="800" width="430" height="434" />
+          <mxGeometry as="geometry" x="2220" y="790" width="430" height="434" />
         </mxCell>
         <mxCell id="companies-f0" value="PK  id : bigint" style="text;html=0;align=left;verticalAlign=middle;spacingLeft=10;fontSize=12;fontStyle=0;overflow=hidden;" vertex="1" parent="companies">
           <mxGeometry as="geometry" x="0" y="56" width="430" height="27" />
@@ -372,7 +348,7 @@
           <mxGeometry as="geometry" x="0" y="407" width="430" height="27" />
         </mxCell>
         <mxCell id="payees" value="支払先&#10;payees" style="swimlane;html=0;startSize=56;horizontal=1;rounded=0;fillColor=#DAE8FC;swimlaneFillColor=#FFFFFF;strokeColor=#6C8EBF;fontSize=16;fontStyle=1;collapsible=0;" vertex="1" parent="1">
-          <mxGeometry as="geometry" x="2740" y="800" width="430" height="137" />
+          <mxGeometry as="geometry" x="2760" y="790" width="430" height="137" />
         </mxCell>
         <mxCell id="payees-f0" value="PK  id : bigint" style="text;html=0;align=left;verticalAlign=middle;spacingLeft=10;fontSize=12;fontStyle=0;overflow=hidden;" vertex="1" parent="payees">
           <mxGeometry as="geometry" x="0" y="56" width="430" height="27" />
@@ -384,7 +360,7 @@
           <mxGeometry as="geometry" x="0" y="110" width="430" height="27" />
         </mxCell>
         <mxCell id="products" value="品目&#10;products" style="swimlane;html=0;startSize=56;horizontal=1;rounded=0;fillColor=#DAE8FC;swimlaneFillColor=#FFFFFF;strokeColor=#6C8EBF;fontSize=16;fontStyle=1;collapsible=0;" vertex="1" parent="1">
-          <mxGeometry as="geometry" x="40" y="1340" width="430" height="245" />
+          <mxGeometry as="geometry" x="60" y="1320" width="430" height="245" />
         </mxCell>
         <mxCell id="products-f0" value="PK  id : bigint" style="text;html=0;align=left;verticalAlign=middle;spacingLeft=10;fontSize=12;fontStyle=0;overflow=hidden;" vertex="1" parent="products">
           <mxGeometry as="geometry" x="0" y="56" width="430" height="27" />
@@ -408,7 +384,7 @@
           <mxGeometry as="geometry" x="0" y="218" width="430" height="27" />
         </mxCell>
         <mxCell id="lumber_invoice_product_lines" value="品目明細&#10;lumber_invoice_product_lines" style="swimlane;html=0;startSize=56;horizontal=1;rounded=0;fillColor=#DAE8FC;swimlaneFillColor=#FFFFFF;strokeColor=#6C8EBF;fontSize=16;fontStyle=1;collapsible=0;" vertex="1" parent="1">
-          <mxGeometry as="geometry" x="580" y="1340" width="430" height="299" />
+          <mxGeometry as="geometry" x="600" y="1320" width="430" height="299" />
         </mxCell>
         <mxCell id="lumber_invoice_product_lines-f0" value="PK  id : bigint" style="text;html=0;align=left;verticalAlign=middle;spacingLeft=10;fontSize=12;fontStyle=0;overflow=hidden;" vertex="1" parent="lumber_invoice_product_lines">
           <mxGeometry as="geometry" x="0" y="56" width="430" height="27" />
@@ -438,7 +414,7 @@
           <mxGeometry as="geometry" x="0" y="272" width="430" height="27" />
         </mxCell>
         <mxCell id="lumber_species" value="樹種&#10;lumber_species" style="swimlane;html=0;startSize=56;horizontal=1;rounded=0;fillColor=#DAE8FC;swimlaneFillColor=#FFFFFF;strokeColor=#6C8EBF;fontSize=16;fontStyle=1;collapsible=0;" vertex="1" parent="1">
-          <mxGeometry as="geometry" x="1120" y="1340" width="430" height="218" />
+          <mxGeometry as="geometry" x="1140" y="1320" width="430" height="218" />
         </mxCell>
         <mxCell id="lumber_species-f0" value="PK  id : bigint" style="text;html=0;align=left;verticalAlign=middle;spacingLeft=10;fontSize=12;fontStyle=0;overflow=hidden;" vertex="1" parent="lumber_species">
           <mxGeometry as="geometry" x="0" y="56" width="430" height="27" />
@@ -458,8 +434,8 @@
         <mxCell id="lumber_species-f5" value="apply_length_adjustment : boolean" style="text;html=0;align=left;verticalAlign=middle;spacingLeft=10;fontSize=12;fontStyle=0;overflow=hidden;" vertex="1" parent="lumber_species">
           <mxGeometry as="geometry" x="0" y="191" width="430" height="27" />
         </mxCell>
-        <mxCell id="journal_entries" value="振替伝票&#10;journal_entries" style="swimlane;html=0;startSize=56;horizontal=1;rounded=0;fillColor=#DAE8FC;swimlaneFillColor=#FFFFFF;strokeColor=#6C8EBF;fontSize=16;fontStyle=1;collapsible=0;" vertex="1" parent="1">
-          <mxGeometry as="geometry" x="1660" y="1340" width="430" height="137" />
+        <mxCell id="journal_entries" value="振替伝票&#10;journal_entries" style="swimlane;html=0;startSize=56;horizontal=1;rounded=0;fillColor=#E1D5E7;swimlaneFillColor=#FFFFFF;strokeColor=#9673A6;fontSize=16;fontStyle=1;collapsible=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1680" y="1320" width="430" height="137" />
         </mxCell>
         <mxCell id="journal_entries-f0" value="PK  id : bigint" style="text;html=0;align=left;verticalAlign=middle;spacingLeft=10;fontSize=12;fontStyle=0;overflow=hidden;" vertex="1" parent="journal_entries">
           <mxGeometry as="geometry" x="0" y="56" width="430" height="27" />
@@ -470,8 +446,8 @@
         <mxCell id="journal_entries-f2" value="description : varchar  (NULL可)" style="text;html=0;align=left;verticalAlign=middle;spacingLeft=10;fontSize=12;fontStyle=0;overflow=hidden;" vertex="1" parent="journal_entries">
           <mxGeometry as="geometry" x="0" y="110" width="430" height="27" />
         </mxCell>
-        <mxCell id="journal_entry_lines" value="仕訳明細&#10;journal_entry_lines" style="swimlane;html=0;startSize=56;horizontal=1;rounded=0;fillColor=#DAE8FC;swimlaneFillColor=#FFFFFF;strokeColor=#6C8EBF;fontSize=16;fontStyle=1;collapsible=0;" vertex="1" parent="1">
-          <mxGeometry as="geometry" x="2200" y="1340" width="430" height="272" />
+        <mxCell id="journal_entry_lines" value="仕訳明細&#10;journal_entry_lines" style="swimlane;html=0;startSize=56;horizontal=1;rounded=0;fillColor=#E1D5E7;swimlaneFillColor=#FFFFFF;strokeColor=#9673A6;fontSize=16;fontStyle=1;collapsible=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="2220" y="1320" width="430" height="272" />
         </mxCell>
         <mxCell id="journal_entry_lines-f0" value="PK  id : bigint" style="text;html=0;align=left;verticalAlign=middle;spacingLeft=10;fontSize=12;fontStyle=0;overflow=hidden;" vertex="1" parent="journal_entry_lines">
           <mxGeometry as="geometry" x="0" y="56" width="430" height="27" />
@@ -497,8 +473,8 @@
         <mxCell id="journal_entry_lines-f7" value="sort_order : smallint  (符号なし)" style="text;html=0;align=left;verticalAlign=middle;spacingLeft=10;fontSize=12;fontStyle=0;overflow=hidden;" vertex="1" parent="journal_entry_lines">
           <mxGeometry as="geometry" x="0" y="245" width="430" height="27" />
         </mxCell>
-        <mxCell id="expense_categories" value="勘定科目&#10;expense_categories" style="swimlane;html=0;startSize=56;horizontal=1;rounded=0;fillColor=#DAE8FC;swimlaneFillColor=#FFFFFF;strokeColor=#6C8EBF;fontSize=16;fontStyle=1;collapsible=0;" vertex="1" parent="1">
-          <mxGeometry as="geometry" x="2740" y="1340" width="430" height="164" />
+        <mxCell id="expense_categories" value="勘定科目&#10;expense_categories" style="swimlane;html=0;startSize=56;horizontal=1;rounded=0;fillColor=#E1D5E7;swimlaneFillColor=#FFFFFF;strokeColor=#9673A6;fontSize=16;fontStyle=1;collapsible=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="2760" y="1320" width="430" height="164" />
         </mxCell>
         <mxCell id="expense_categories-f0" value="PK  id : bigint" style="text;html=0;align=left;verticalAlign=middle;spacingLeft=10;fontSize=12;fontStyle=0;overflow=hidden;" vertex="1" parent="expense_categories">
           <mxGeometry as="geometry" x="0" y="56" width="430" height="27" />
@@ -513,7 +489,7 @@
           <mxGeometry as="geometry" x="0" y="137" width="430" height="27" />
         </mxCell>
         <mxCell id="quantity_tier_surcharges" value="数量帯加算&#10;quantity_tier_surcharges" style="swimlane;html=0;startSize=56;horizontal=1;rounded=0;fillColor=#DAE8FC;swimlaneFillColor=#FFFFFF;strokeColor=#6C8EBF;fontSize=16;fontStyle=1;collapsible=0;" vertex="1" parent="1">
-          <mxGeometry as="geometry" x="40" y="1880" width="430" height="218" />
+          <mxGeometry as="geometry" x="60" y="1850" width="430" height="218" />
         </mxCell>
         <mxCell id="quantity_tier_surcharges-f0" value="PK  id : bigint" style="text;html=0;align=left;verticalAlign=middle;spacingLeft=10;fontSize=12;fontStyle=0;overflow=hidden;" vertex="1" parent="quantity_tier_surcharges">
           <mxGeometry as="geometry" x="0" y="56" width="430" height="27" />
@@ -534,7 +510,7 @@
           <mxGeometry as="geometry" x="0" y="191" width="430" height="27" />
         </mxCell>
         <mxCell id="thickness_surcharges" value="厚み加算&#10;thickness_surcharges" style="swimlane;html=0;startSize=56;horizontal=1;rounded=0;fillColor=#DAE8FC;swimlaneFillColor=#FFFFFF;strokeColor=#6C8EBF;fontSize=16;fontStyle=1;collapsible=0;" vertex="1" parent="1">
-          <mxGeometry as="geometry" x="580" y="1880" width="430" height="137" />
+          <mxGeometry as="geometry" x="600" y="1850" width="430" height="137" />
         </mxCell>
         <mxCell id="thickness_surcharges-f0" value="PK  id : bigint" style="text;html=0;align=left;verticalAlign=middle;spacingLeft=10;fontSize=12;fontStyle=0;overflow=hidden;" vertex="1" parent="thickness_surcharges">
           <mxGeometry as="geometry" x="0" y="56" width="430" height="27" />
@@ -546,7 +522,7 @@
           <mxGeometry as="geometry" x="0" y="110" width="430" height="27" />
         </mxCell>
         <mxCell id="lumber_width_prices" value="幅別単価&#10;lumber_width_prices" style="swimlane;html=0;startSize=56;horizontal=1;rounded=0;fillColor=#DAE8FC;swimlaneFillColor=#FFFFFF;strokeColor=#6C8EBF;fontSize=16;fontStyle=1;collapsible=0;" vertex="1" parent="1">
-          <mxGeometry as="geometry" x="1120" y="1880" width="430" height="164" />
+          <mxGeometry as="geometry" x="1140" y="1850" width="430" height="164" />
         </mxCell>
         <mxCell id="lumber_width_prices-f0" value="PK  id : bigint" style="text;html=0;align=left;verticalAlign=middle;spacingLeft=10;fontSize=12;fontStyle=0;overflow=hidden;" vertex="1" parent="lumber_width_prices">
           <mxGeometry as="geometry" x="0" y="56" width="430" height="27" />
@@ -561,7 +537,7 @@
           <mxGeometry as="geometry" x="0" y="137" width="430" height="27" />
         </mxCell>
         <mxCell id="pricing_settings" value="単価設定&#10;pricing_settings" style="swimlane;html=0;startSize=56;horizontal=1;rounded=0;fillColor=#DAE8FC;swimlaneFillColor=#FFFFFF;strokeColor=#6C8EBF;fontSize=16;fontStyle=1;collapsible=0;" vertex="1" parent="1">
-          <mxGeometry as="geometry" x="1660" y="1880" width="430" height="137" />
+          <mxGeometry as="geometry" x="1680" y="1850" width="430" height="137" />
         </mxCell>
         <mxCell id="pricing_settings-f0" value="PK  id : bigint" style="text;html=0;align=left;verticalAlign=middle;spacingLeft=10;fontSize=12;fontStyle=0;overflow=hidden;" vertex="1" parent="pricing_settings">
           <mxGeometry as="geometry" x="0" y="56" width="430" height="27" />
@@ -572,8 +548,8 @@
         <mxCell id="pricing_settings-f2" value="value : varchar" style="text;html=0;align=left;verticalAlign=middle;spacingLeft=10;fontSize=12;fontStyle=0;overflow=hidden;" vertex="1" parent="pricing_settings">
           <mxGeometry as="geometry" x="0" y="110" width="430" height="27" />
         </mxCell>
-        <mxCell id="opening_balances" value="期首残高&#10;opening_balances" style="swimlane;html=0;startSize=56;horizontal=1;rounded=0;fillColor=#DAE8FC;swimlaneFillColor=#FFFFFF;strokeColor=#6C8EBF;fontSize=16;fontStyle=1;collapsible=0;" vertex="1" parent="1">
-          <mxGeometry as="geometry" x="2740" y="1880" width="430" height="191" />
+        <mxCell id="opening_balances" value="期首残高&#10;opening_balances" style="swimlane;html=0;startSize=56;horizontal=1;rounded=0;fillColor=#E1D5E7;swimlaneFillColor=#FFFFFF;strokeColor=#9673A6;fontSize=16;fontStyle=1;collapsible=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="2760" y="1850" width="430" height="191" />
         </mxCell>
         <mxCell id="opening_balances-f0" value="PK  id : bigint" style="text;html=0;align=left;verticalAlign=middle;spacingLeft=10;fontSize=12;fontStyle=0;overflow=hidden;" vertex="1" parent="opening_balances">
           <mxGeometry as="geometry" x="0" y="56" width="430" height="27" />
@@ -590,46 +566,58 @@
         <mxCell id="opening_balances-f4" value="memo : text  (NULL可)" style="text;html=0;align=left;verticalAlign=middle;spacingLeft=10;fontSize=12;fontStyle=0;overflow=hidden;" vertex="1" parent="opening_balances">
           <mxGeometry as="geometry" x="0" y="164" width="430" height="27" />
         </mxCell>
-        <mxCell id="relation-1" value="client_id" edge="1" parent="1" source="clients" target="lumber_invoices" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;startArrow=ERmandOne;startFill=0;endArrow=ERzeroToMany;endFill=0;dashed=1;strokeColor=#536878;fontSize=12;labelBackgroundColor=#FFFFFF;jettySize=auto;;labelBackgroundColor=#FFFFFF;">
+        <mxCell id="relation-1" value="client_id" edge="1" parent="1" source="clients" target="lumber_invoices" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;startArrow=ERmandOne;startFill=0;endArrow=ERzeroToMany;endFill=0;dashed=1;strokeColor=#536878;fontSize=12;labelBackgroundColor=#FFFFFF;jettySize=auto;;labelBackgroundColor=#FFFFFF;;fontSize=11;exitX=0.5;exitY=1;entryX=0.5;entryY=0;">
           <mxGeometry as="geometry" relative="1" />
         </mxCell>
-        <mxCell id="relation-2" value="lumber_invoice_id" edge="1" parent="1" source="lumber_invoices" target="lumber_invoice_lines" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;startArrow=ERmandOne;startFill=0;endArrow=ERzeroToMany;endFill=0;dashed=1;strokeColor=#536878;fontSize=12;labelBackgroundColor=#FFFFFF;jettySize=auto;;labelBackgroundColor=#FFFFFF;">
+        <mxCell id="relation-2" value="lumber_invoice_id" edge="1" parent="1" source="lumber_invoices" target="lumber_invoice_lines" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;startArrow=ERmandOne;startFill=0;endArrow=ERzeroToMany;endFill=0;dashed=1;strokeColor=#536878;fontSize=12;labelBackgroundColor=#FFFFFF;jettySize=auto;;labelBackgroundColor=#FFFFFF;;fontSize=11;exitX=1;exitY=0.06;entryX=0;entryY=0.06;">
           <mxGeometry as="geometry" relative="1" />
         </mxCell>
-        <mxCell id="relation-3" value="lumber_species_id" edge="1" parent="1" source="lumber_species" target="lumber_invoice_lines" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;startArrow=ERmandOne;startFill=0;endArrow=ERzeroToMany;endFill=0;dashed=1;strokeColor=#536878;fontSize=12;labelBackgroundColor=#FFFFFF;jettySize=auto;;labelBackgroundColor=#FFFFFF;">
+        <mxCell id="relation-3" value="lumber_species_id" edge="1" parent="1" source="lumber_species" target="lumber_invoice_lines" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;startArrow=ERmandOne;startFill=0;endArrow=ERzeroToMany;endFill=0;dashed=1;strokeColor=#536878;fontSize=12;labelBackgroundColor=#FFFFFF;jettySize=auto;;labelBackgroundColor=#FFFFFF;;fontSize=11;exitX=0;exitY=0.06;entryX=1;entryY=0.06;">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="1085.0" y="1333.08" />
+              <mxPoint x="1085.0" y="812.8" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="relation-4" value="lumber_invoice_line_id" edge="1" parent="1" source="lumber_invoice_lines" target="lumber_invoice_line_tiers" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;startArrow=ERmandOne;startFill=0;endArrow=ERzeroToMany;endFill=0;dashed=1;strokeColor=#536878;fontSize=12;labelBackgroundColor=#FFFFFF;jettySize=auto;;labelBackgroundColor=#FFFFFF;;fontSize=11;exitX=1;exitY=0.06;entryX=0;entryY=0.06;">
           <mxGeometry as="geometry" relative="1" />
         </mxCell>
-        <mxCell id="relation-4" value="lumber_invoice_line_id" edge="1" parent="1" source="lumber_invoice_lines" target="lumber_invoice_line_tiers" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;startArrow=ERmandOne;startFill=0;endArrow=ERzeroToMany;endFill=0;dashed=1;strokeColor=#536878;fontSize=12;labelBackgroundColor=#FFFFFF;jettySize=auto;;labelBackgroundColor=#FFFFFF;">
+        <mxCell id="relation-6" value="client_id" edge="1" parent="1" source="clients" target="client_payments" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;startArrow=ERmandOne;startFill=0;endArrow=ERzeroToMany;endFill=0;dashed=1;strokeColor=#536878;fontSize=12;labelBackgroundColor=#FFFFFF;jettySize=auto;;labelBackgroundColor=#FFFFFF;;fontSize=11;exitX=1;exitY=0.06;entryX=0;entryY=0.06;">
           <mxGeometry as="geometry" relative="1" />
         </mxCell>
-        <mxCell id="relation-5" value="lumber_invoice_id" edge="1" parent="1" source="lumber_invoices" target="lumber_invoice_payments" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;startArrow=ERmandOne;startFill=0;endArrow=ERzeroToMany;endFill=0;dashed=1;strokeColor=#536878;fontSize=12;labelBackgroundColor=#FFFFFF;jettySize=auto;;labelBackgroundColor=#FFFFFF;">
+        <mxCell id="relation-7" value="lumber_invoice_id" edge="1" parent="1" source="lumber_invoices" target="lumber_invoice_product_lines" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;startArrow=ERmandOne;startFill=0;endArrow=ERzeroToMany;endFill=0;dashed=1;strokeColor=#536878;fontSize=12;labelBackgroundColor=#FFFFFF;jettySize=auto;;labelBackgroundColor=#FFFFFF;;fontSize=11;exitX=1;exitY=0.06;entryX=0;entryY=0.06;">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="545.0" y="816.04" />
+              <mxPoint x="545.0" y="1337.94" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="relation-8" value="product_id" edge="1" parent="1" source="products" target="lumber_invoice_product_lines" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;startArrow=ERzeroToOne;startFill=0;endArrow=ERzeroToMany;endFill=0;dashed=1;strokeColor=#536878;fontSize=12;labelBackgroundColor=#FFFFFF;jettySize=auto;;labelBackgroundColor=#FFFFFF;;fontSize=11;exitX=1;exitY=0.06;entryX=0;entryY=0.06;">
           <mxGeometry as="geometry" relative="1" />
         </mxCell>
-        <mxCell id="relation-6" value="client_id" edge="1" parent="1" source="clients" target="client_payments" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;startArrow=ERmandOne;startFill=0;endArrow=ERzeroToMany;endFill=0;dashed=1;strokeColor=#536878;fontSize=12;labelBackgroundColor=#FFFFFF;jettySize=auto;;labelBackgroundColor=#FFFFFF;">
+        <mxCell id="relation-9" value="lumber_species_id" edge="1" parent="1" source="lumber_species" target="lumber_width_prices" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;startArrow=ERmandOne;startFill=0;endArrow=ERzeroToMany;endFill=0;dashed=1;strokeColor=#536878;fontSize=12;labelBackgroundColor=#FFFFFF;jettySize=auto;;labelBackgroundColor=#FFFFFF;;fontSize=11;exitX=0.5;exitY=1;entryX=0.5;entryY=0;">
           <mxGeometry as="geometry" relative="1" />
         </mxCell>
-        <mxCell id="relation-7" value="lumber_invoice_id" edge="1" parent="1" source="lumber_invoices" target="lumber_invoice_product_lines" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;startArrow=ERmandOne;startFill=0;endArrow=ERzeroToMany;endFill=0;dashed=1;strokeColor=#536878;fontSize=12;labelBackgroundColor=#FFFFFF;jettySize=auto;;labelBackgroundColor=#FFFFFF;">
+        <mxCell id="relation-10" value="employee_id" edge="1" parent="1" source="employees" target="attendances" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;startArrow=ERmandOne;startFill=0;endArrow=ERzeroToMany;endFill=0;dashed=1;strokeColor=#536878;fontSize=12;labelBackgroundColor=#FFFFFF;jettySize=auto;;labelBackgroundColor=#FFFFFF;;fontSize=11;exitX=1;exitY=0.06;entryX=0;entryY=0.06;">
           <mxGeometry as="geometry" relative="1" />
         </mxCell>
-        <mxCell id="relation-8" value="product_id" edge="1" parent="1" source="products" target="lumber_invoice_product_lines" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;startArrow=ERzeroToOne;startFill=0;endArrow=ERzeroToMany;endFill=0;dashed=1;strokeColor=#536878;fontSize=12;labelBackgroundColor=#FFFFFF;jettySize=auto;;labelBackgroundColor=#FFFFFF;">
+        <mxCell id="relation-11" value="employee_id" edge="1" parent="1" source="employees" target="salary_payments" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;startArrow=ERmandOne;startFill=0;endArrow=ERzeroToMany;endFill=0;dashed=1;strokeColor=#536878;fontSize=12;labelBackgroundColor=#FFFFFF;jettySize=auto;;labelBackgroundColor=#FFFFFF;;fontSize=11;exitX=0.5;exitY=0;entryX=0.5;entryY=0;">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="1895.0" y="232.0" />
+              <mxPoint x="2975.0" y="232.0" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="relation-12" value="journal_entry_id" edge="1" parent="1" source="journal_entries" target="journal_entry_lines" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;startArrow=ERmandOne;startFill=0;endArrow=ERzeroToMany;endFill=0;dashed=1;strokeColor=#536878;fontSize=12;labelBackgroundColor=#FFFFFF;jettySize=auto;;labelBackgroundColor=#FFFFFF;;fontSize=11;exitX=1;exitY=0.06;entryX=0;entryY=0.06;">
           <mxGeometry as="geometry" relative="1" />
         </mxCell>
-        <mxCell id="relation-9" value="lumber_species_id" edge="1" parent="1" source="lumber_species" target="lumber_width_prices" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;startArrow=ERmandOne;startFill=0;endArrow=ERzeroToMany;endFill=0;dashed=1;strokeColor=#536878;fontSize=12;labelBackgroundColor=#FFFFFF;jettySize=auto;;labelBackgroundColor=#FFFFFF;">
+        <mxCell id="relation-13" value="expense_category_id" edge="1" parent="1" source="expense_categories" target="journal_entry_lines" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;startArrow=ERmandOne;startFill=0;endArrow=ERzeroToMany;endFill=0;dashed=1;strokeColor=#536878;fontSize=12;labelBackgroundColor=#FFFFFF;jettySize=auto;;labelBackgroundColor=#FFFFFF;;fontSize=11;exitX=0;exitY=0.06;entryX=1;entryY=0.06;">
           <mxGeometry as="geometry" relative="1" />
         </mxCell>
-        <mxCell id="relation-10" value="employee_id" edge="1" parent="1" source="employees" target="attendances" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;startArrow=ERmandOne;startFill=0;endArrow=ERzeroToMany;endFill=0;dashed=1;strokeColor=#536878;fontSize=12;labelBackgroundColor=#FFFFFF;jettySize=auto;;labelBackgroundColor=#FFFFFF;">
-          <mxGeometry as="geometry" relative="1" />
-        </mxCell>
-        <mxCell id="relation-11" value="employee_id" edge="1" parent="1" source="employees" target="salary_payments" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;startArrow=ERmandOne;startFill=0;endArrow=ERzeroToMany;endFill=0;dashed=1;strokeColor=#536878;fontSize=12;labelBackgroundColor=#FFFFFF;jettySize=auto;;labelBackgroundColor=#FFFFFF;">
-          <mxGeometry as="geometry" relative="1" />
-        </mxCell>
-        <mxCell id="relation-12" value="journal_entry_id" edge="1" parent="1" source="journal_entries" target="journal_entry_lines" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;startArrow=ERmandOne;startFill=0;endArrow=ERzeroToMany;endFill=0;dashed=1;strokeColor=#536878;fontSize=12;labelBackgroundColor=#FFFFFF;jettySize=auto;;labelBackgroundColor=#FFFFFF;">
-          <mxGeometry as="geometry" relative="1" />
-        </mxCell>
-        <mxCell id="relation-13" value="expense_category_id" edge="1" parent="1" source="expense_categories" target="journal_entry_lines" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;startArrow=ERmandOne;startFill=0;endArrow=ERzeroToMany;endFill=0;dashed=1;strokeColor=#536878;fontSize=12;labelBackgroundColor=#FFFFFF;jettySize=auto;;labelBackgroundColor=#FFFFFF;">
-          <mxGeometry as="geometry" relative="1" />
-        </mxCell>
-        <mxCell id="relation-14" value="expense_category_id" edge="1" parent="1" source="expense_categories" target="opening_balances" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;startArrow=ERmandOne;startFill=0;endArrow=ERzeroToMany;endFill=0;dashed=1;strokeColor=#536878;fontSize=12;labelBackgroundColor=#FFFFFF;jettySize=auto;;labelBackgroundColor=#FFFFFF;">
+        <mxCell id="relation-14" value="expense_category_id" edge="1" parent="1" source="expense_categories" target="opening_balances" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;startArrow=ERmandOne;startFill=0;endArrow=ERzeroToMany;endFill=0;dashed=1;strokeColor=#536878;fontSize=12;labelBackgroundColor=#FFFFFF;jettySize=auto;;labelBackgroundColor=#FFFFFF;;fontSize=11;exitX=0.5;exitY=1;entryX=0.5;entryY=0;">
           <mxGeometry as="geometry" relative="1" />
         </mxCell>
       </root>
